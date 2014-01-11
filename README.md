@@ -21,7 +21,7 @@ import redis;
 Functions
 ---------
 
-### init_redis
+### redis.init_redis
 
 ```
 redis.init_redis(host, port, timeout_ms)
@@ -31,7 +31,13 @@ Use the redis server at the given `host` and `port` with a timeout of `timeout_m
 
 This function is intended to be called from the Varnish subroutine `vcl_init`. If the call is left out, the module will attempt to connect to the Redis server at `127.0.0.1:6379` with a connect timeout of `200ms`.
 
-### send
+**Example:**
+
+```
+redis.init_redis("localhost", 6379, 200);
+```
+
+### redis.send
 
 ```
 redis.send(command)
@@ -39,13 +45,30 @@ redis.send(command)
 
 Sends the given `command` to redis; the response will be ignored.
 
-### call
+**Example:**
+
+```
+redis.send("LPUSH client " + client.ip);
+```
+
+### redis.call
 
 ```
 redis.call(command)
 ```
 
 Sends the given `command` to redis; any response will be returned as a string.
+
+**Example:**
+
+```
+set req.http.x-redis = redis.call("LTRIM client 0 99");
+```
+
+Examples
+--------
+
+See the [`examples/`](/examples) directory.
 
 Dependencies
 ------------
@@ -82,11 +105,6 @@ sudo make install
 Be sure to point `VARNISHSRC` to wherever you downloaded the Varnish source code to.
 
 **Important:** Some systems such as CentOS 64-bit store vmods in `/usr/lib64/varnish/vmods` not `/usr/lib/varnish/vmods`, so change that if needed.
-
-Configuration
--------------
-
-See the `examples/` folder.
 
 Troubleshooting
 ---------------
