@@ -97,7 +97,7 @@ If you get an error like this when starting Varnish:
 
 ```
 Message from VCC-compiler:
-Could not load module redis1
+Could not load module redis
 /usr/lib64/varnish/vmods/libvmod_redis.so
 ABI mismatch, expected <Varnish 3.0.4 9f83e8f>, got <Varnish 3.0.5 1a89b1f>
 ('input' Line 7 Pos 8)
