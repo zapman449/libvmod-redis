@@ -57,14 +57,50 @@ Dependencies
 Installation
 ------------
 
+#### Step 1. Download Varnish Source
+
+On Ubuntu, this can be easily done using `apt-get source varnish`. However, you can get the source for Varnish on any OS using Git.
+
+```
+cd /opt
+git clone https://github.com/varnish/Varnish-Cache.git varnish
+cd varnish
+git checkout tags/varnish-3.0.3
+```
+
+**Important:** You must download the same version of the Varnish source code as you have installed, or you'll get an error when loading the vmod. You can get your current version using `varnishd -V`.
+
+#### Step 2. Compile & Install
+
 ```
 ./autogen.sh
-./configure
+./configure VARNISHSRC=/opt/varnish VMODDIR=/usr/lib/varnish/vmods
 make
 sudo make install
 ```
+
+Be sure to point `VARNISHSRC` to wherever you downloaded the Varnish source code to.
+
+**Important:** Some systems such as CentOS 64-bit store vmods in `/usr/lib64/varnish/vmods` not `/usr/lib/varnish/vmods`, so change that if needed.
 
 Configuration
 -------------
 
 See the `examples/` folder.
+
+Troubleshooting
+---------------
+
+#### Could not load module redis
+
+If you get an error like this when starting Varnish:
+
+```
+Message from VCC-compiler:
+Could not load module redis1
+/usr/lib64/varnish/vmods/libvmod_redis.so
+ABI mismatch, expected <Varnish 3.0.4 9f83e8f>, got <Varnish 3.0.5 1a89b1f>
+('input' Line 7 Pos 8)
+```
+
+You compiled `libvmod-redis` against the wrong version of the Varnish source code.
