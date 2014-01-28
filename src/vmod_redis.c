@@ -179,7 +179,7 @@ vmod_call(struct sess *sp, struct vmod_priv *priv, const char *command)
 		ret = WS_Dup(sp->ws, reply->str);
 		break;
 	case REDIS_REPLY_INTEGER:
-		digits = WS_Alloc(sp->ws, 23); /* sizeof(long long) == 8; 20 digits + NUL */
+		digits = WS_Alloc(sp->ws, 21); /* sizeof(long long) == 8; 20 digits + NUL */
 		if(digits)
 			sprintf(digits, "%lld", reply->integer);
 		ret = digits;
@@ -271,7 +271,7 @@ vmod_pop(struct sess *sp, struct vmod_priv *priv)
 		ret = WS_Dup(sp->ws, reply->str);
 		break;
 	case REDIS_REPLY_INTEGER:
-		digits = WS_Alloc(sp->ws, 23); /* sizeof(long long) == 8; 20 digits + NUL */
+		digits = WS_Alloc(sp->ws, 21); /* sizeof(long long) == 8; 20 digits + NUL */
 		if(digits)
 			sprintf(digits, "%lld", reply->integer);
 		ret = digits;
