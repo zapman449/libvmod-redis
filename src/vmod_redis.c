@@ -248,9 +248,13 @@ vmod_push(struct sess *sp, struct vmod_priv *priv, const char *command)
 const char *
 vmod_pop(struct sess *sp, struct vmod_priv *priv)
 {
-	redisReply *reply = NULL;
+	/* redisReply *reply = NULL; */
+	redisReply *reply;
+	/* void *reply = NULL; */
+	/* void *reply; */
 	const char *ret = NULL;
 	char *digits;
+	redisContext *c;
 
 	LOG_T("redis(%x): pop %p\n", pthread_self(), priv->priv);
 
